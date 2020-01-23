@@ -1,7 +1,7 @@
 # twitchbottrans
 Twitch Chatbot Translator: ver 0.1.0
 
-#1. Modify config.json according to your environment.
+## 1. Modify config.json according to your environment.
 
 * Q. oauth code?
   
@@ -15,7 +15,7 @@ Twitch Chatbot Translator: ver 0.1.0
   
      References : https://cloud.google.com/translate/docs/languages
 
-#2. run script. twitchbottrans.py
+## 2. run script. twitchbottrans.py
 
 * $ python twitchbottrans.py
 
