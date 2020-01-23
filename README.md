@@ -17,8 +17,7 @@ Twitch Chatbot Translator: ver 0.1.0
 
 2. run script. twitchbottrans.py
 
---
-  $ python twitchbottrans.py
+* $ python twitchbottrans.py
 
 
 ---
