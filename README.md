@@ -9,9 +9,9 @@ Twitch Chatbot Translator: ver 0.1.0
   
      used : Twitch Chat OAuth Password Generator
 
-  Q. toLanguage : ?
+* Q. toLanguage : ?
   
-  A. Choose a language you can read.
+* A. Choose a language you can read.
   
      References : https://cloud.google.com/translate/docs/languages
 
