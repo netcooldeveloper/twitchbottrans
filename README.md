@@ -3,7 +3,7 @@ Twitch Chatbot Translator: ver 0.1.0
 
 1. Modify config.json according to your environment.
 
-  Q.oauth code?
+  1.Q.oauth code?
   
   A.https://dev.twitch.tv/docs/irc/guide
   
