@@ -1,0 +1,19 @@
+{
+    "TwitchIrcServerInfo": {
+        "address" : "irc.twitch.tv",
+        "port"    : 6667
+    },
+
+    "TransTV":{
+        "TwitchAccountID" : "yourTwitchID"
+    },
+
+    "BotInfo":{
+        "TwitchAccountID" : "yourTwitchID(Bot)",
+        "oauth"           : "oauth:xxxxxxxxxxxxxxxx"
+    },
+
+    "TranslatorInfo":{
+        "toLanguage" : "ja"
+    }
+}
