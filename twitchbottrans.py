@@ -17,7 +17,13 @@ import string
 DEBUG_MODE = False
 
 def Send_message(message):
-    s.send(("PRIVMSG #" + CHANNEL + " : " + message + "\r\n").encode())
+    sendmsg = "PRIVMSG #" + CHANNEL + " : " + message
+    Socket_send(sendmsg)
+
+def Socket_send(message):
+    if (DEBUG_MODE):
+        print("send << " + message)
+    s.send((message+"\r\n").encode())
 
 # Config load : format JSON
 f = open("config.json")
@@ -45,11 +51,15 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST,PORT))
 
 # Authentication
-s.send(("PASS " + PASS + "\r\n").encode())
-s.send(("NICK " + NICK + "\r\n").encode())
+sendmsg = "PASS " + PASS
+Socket_send(sendmsg)
+
+sendmsg = "NICK " + NICK
+Socket_send(sendmsg)
 
 # Twich Channel Change
-s.send(("JOIN #" + CHANNEL + " \r\n").encode())
+sendmsg = "JOIN #" + CHANNEL
+Socket_send(sendmsg)
 
 # Google Tranlator 
 gt = Translator()
@@ -57,16 +67,22 @@ gt = Translator()
 flagEndMsg = 0
 
 while True:
+    # IRC Server -> DATA -> RECV
     readbuffer = readbuffer + (s.recv(1024)).decode()
     temp = readbuffer.split("\n")
 
     readbuffer = temp.pop()
 
     for line in temp :
-        if (line[0] == "PING"):
-            s.send(("PONG %s\r\n" % line[1]).encode())
-        else:
-            ports = line.split(":")
+        if(DEBUG_MODE):
+            print("recv >> " + line)
+
+        ports = line.split(":")
+
+        if ("PING" in ports[0]):
+            sendmsg = "PONG %s" % ports[1]
+            Socket_send(sendmsg)
+            continue
 
         if "QUIT" not in ports[1] and "JOIN" not in ports[1] and "PORT" not in ports[1] :
             try:
@@ -77,14 +93,8 @@ while True:
             usernamesplit = ports[1].split("!")
             username = usernamesplit[0]
 
-            if (DEBUG_MODE):
-                print(username + ":" + message)
-
             if (message in "End of /NAMES list"):
                 flagEndMsg = 1
-                continue
-
-            if (message in "mi.twitch.tv"):
                 continue
 
             if (flagEndMsg == 1):
@@ -100,7 +110,5 @@ while True:
                     tolang = json_data['TranslatorInfo']['toLanguage']
 
                 tranText = gt.translate(message, dest=tolang).text
-                if (DEBUG_MODE):
-                    print(tranText)
 
                 Send_message(tranText + "  <<(" + username + ")")
